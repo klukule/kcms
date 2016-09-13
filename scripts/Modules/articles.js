@@ -109,17 +109,20 @@ function Articles(){
       var userInfo = [];
       postTable.ClearRows();
       for (var postId in data.posts) {
-        API.Articles.RegenRow(data.posts[postId].id,data.posts[postId].title,data.posts[postId].date,data.posts[postId].uid);
+        var d = new Date(data.posts[postId].date);
+        var date = d.getDate()  + "." + (d.getMonth()+1) + "." + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+        var ItemGUID = API.GenerateGUID();
+        postTable.AddRow([data.posts[postId].title,'<span id="'+ItemGUID+'">Loading...</span>',date,'<a class="btn btn-danger" style="float:right;" onclick="API.Articles.ShowRemoveModal('+data.posts[postId].id+')"><i class="fa fa-trash-o"></i></a><a class="btn btn-info" style="float:right;margin-right:5px;"onclick="API.Articles.EditPost('+data.posts[postId].id+')"><i class="fa fa-pencil"></i></a>']);
+        API.TogglePage("postList");
+
+        API.Articles.GetAuthor(ItemGUID,data.posts[postId].uid);
       }
     });
   }
 
-  API.Articles.RegenRow = function(id,title,dd,uid){
-    var d = new Date(dd);
-    var date = d.getDate()  + "." + (d.getMonth()+1) + "." + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+  API.Articles.GetAuthor = function(guid, uid){
     API.GetUserInfoId(uid,function(userInfo){
-      postTable.AddRow([title,userInfo.display_name,date,'<a class="btn btn-danger" style="float:right;" onclick="API.Articles.ShowRemoveModal('+id+')"><i class="fa fa-trash-o"></i></a><a class="btn btn-info" style="float:right;margin-right:5px;"onclick="API.Articles.EditPost('+id+')"><i class="fa fa-pencil"></i></a>']);
-      API.TogglePage("postList");
+      $("#"+guid).text(userInfo.display_name);
     });
   }
 
