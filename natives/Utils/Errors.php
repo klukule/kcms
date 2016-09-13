@@ -66,6 +66,66 @@ function PrintError($errCode){
       "message" => "No Text entered",
       "code" => -22
     ],
+    -23 => [
+      "status" => "error",
+      "message" => "No users found",
+      "code" => -23
+    ],
+    -24 => [
+      "status" => "error",
+      "message" => "User with this ID not found",
+      "code" => -24
+    ],
+    -25 => [
+      "status" => "error",
+      "message" => "No PR token entered",
+      "code" => -25
+    ],
+    -26 => [
+      "status" => "error",
+      "message" => "Invalid token",
+      "code" => -26
+    ],
+    -27 => [
+      "status" => "error",
+      "message" => "Failed to update password, try again",
+      "code" => -27
+    ],
+    -28 => [
+      "status" => "error",
+      "message" => "Username alrady taken",
+      "code" => -28
+    ],
+    -29 => [
+      "status" => "error",
+      "message" => "No display name entered",
+      "code" => -29
+    ],
+    -30 => [
+      "status" => "error",
+      "message" => "Failed to create user, try again",
+      "code" => -30
+    ],
+    -31 => [
+      "status" => "error",
+      "message" => "No avatar image sent",
+      "code" => -31
+    ],
+    -32 => [
+      "status" => "error",
+      "message" => "Avatar filesize too large",
+      "code" => -32
+    ],
+    -33 => [
+      "status" => "error",
+      "message" => "Unsupported image type (Allowed: *.jpg, *.png, *.jpeg, *.gif)",
+      "code" => -33
+    ],
+    -34 => [
+      "status" => "error",
+      "message" => "Failed to upload avatar image, try again",
+      "code" => -34
+    ]
   ];
 
   echo json_encode($errors[$errCode]);

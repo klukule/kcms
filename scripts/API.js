@@ -9,8 +9,9 @@ require("components/textBox.js");
 require("components/wysiwygEditor.js");
 require("components/button.js");
 
-require("../version.json");
+require("../version.js");
 
+$(".navbar-brand span").text("v "+Version.major+"."+Version.minor+"."+Version.patch);
 
 var API = {};
 
@@ -76,6 +77,7 @@ API.MenuShortcutDeactivate = function(){
 
   API.TogglePage = function(name){
     API.Pages[name].Toggle();
+    API.RenewToken();
   }
 
   API.RegisterModule = function(name){
@@ -123,11 +125,11 @@ API.MenuShortcutDeactivate = function(){
     });
 
     xhr.open(type, "natives/"+endpoint+".php");
+    var setCT = true;
     if(Object.keys(headers).length > 0)
     for (var variable in headers) {
       if (headers.hasOwnProperty(variable)) {
         xhr.setRequestHeader(variable, headers[variable]);
-
       }
     }
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
@@ -135,10 +137,46 @@ API.MenuShortcutDeactivate = function(){
     xhr.send(jQuery.param(data));
   }
 
+  API.ExecuteNativeCommandFormData = function(endpoint, type, data, headers, callback) {
+
+
+    var formData = new FormData();
+
+    if(Object.keys(data).length > 0)
+    for (var variable in data) {
+      if (data.hasOwnProperty(variable)) {
+        console.log(variable + " - " + data[variable]);
+        formData.append(variable,data[variable]);
+      }
+    }
+    
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+        callback(jQuery.parseJSON(this.responseText));
+      }
+    });
+
+    xhr.open(type, "natives/"+endpoint+".php");
+
+    if(Object.keys(headers).length > 0)
+    for (var variable in headers) {
+      if (headers.hasOwnProperty(variable)) {
+        xhr.setRequestHeader(variable, headers[variable]);
+      }
+    }
+    // xhr.setRequestHeader("content-type", "multipart/form-data");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.send(formData);
+  }
+
   API.GetCurentUserInfo = function(callback){
     API.ExecuteNativeCommand("GetUserInfo","POST",{"username":$.cookie('username')},"",function(data){
       if(data.status == "error"){
-        API.ShowError("GetCurrentUserInfo failed",data.message);
+        API.ShowError("GetCurrentUserInfo failed",data.message + "<br>Please reload page");
         callback(data);
       }else{
         callback(data);
@@ -149,7 +187,7 @@ API.MenuShortcutDeactivate = function(){
   API.GetUserInfo = function(username, callback){
     API.ExecuteNativeCommand("GetUserInfo","POST",{"username":username},"",function(data){
       if(data.status == "error"){
-        API.ShowError("GetCurrentUserInfo failed",data.message);
+        API.ShowError("GetUserInfo failed",data.message + "<br>Please reload page");
         callback(data);
       }else{
         callback(data);
@@ -160,7 +198,7 @@ API.MenuShortcutDeactivate = function(){
   API.GetUserInfoId = function(id, callback){
     API.ExecuteNativeCommand("GetUserInfo","POST",{"id":id},"",function(data){
       if(data.status == "error"){
-        API.ShowError("GetCurrentUserInfo failed",data.message);
+        API.ShowError("GetUserInfo failed",data.message + "<br>Please reload page");
         callback(data);
       }else{
         callback(data);
@@ -198,4 +236,24 @@ API.MenuShortcutDeactivate = function(){
       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+  }
+
+  API.GenerateModalHTML = function(id, header = "",body="",footer=""){
+    var code = '<div class="modal fade" id="'+id+'" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;"><div class="modal-dialog"><div class="modal-content">';
+    if(header != "")
+    code += '<div class="modal-header text-center">'+header+"</div>";
+
+    if(body != "")
+    code += '<div class="modal-body">'+body+"</div>";
+
+    if(footer != "")
+    code += '<div class="modal-footer">'+footer+"</div>";
+
+    code += '</div></div></div>';
+
+    return code;
+  }
+
+  API.RenewToken = function(){
+    API.ExecuteNativeCommand("RenewToken","GET",{},"",function(resp){});
   }

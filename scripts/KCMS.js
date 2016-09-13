@@ -18,6 +18,9 @@ function require( url ) {
     };
     ajax.send(null);
 }
+
+
+
 require("API.js");
 
 API.AddMenuCategory("main","Main");
@@ -36,6 +39,15 @@ $(document).ready(function () {
     "timeOut": "6000"
   };
 
+  /*var clog = console.log;
+  var cerror = console.error;
+  var cdebug = console.debug;
+  var cinfo = console.info;
+
+  console.log = function(message) {API.ShowSuccess("Log",message); clog(message);};
+  console.error = function(message) {API.ShowError("Error",message); cerror(message);};
+  console.debug = function(message) {API.ShowSuccess("Debug",message); cdebug(message);};
+  console.info = function(message) {API.ShowInfo("Info",message); cinfo(message);};*/
 
     // Handle minimalize left menu
     $('.left-nav-toggle a').on('click', function(event){

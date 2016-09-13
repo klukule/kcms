@@ -93,8 +93,11 @@ function Articles(){
     if ( $( "#aRemModal" ).length ) {
       $( "#aRemModal" ).remove();
     }
+    var head = "";
+    var body = '<h4 class="modal-title">Do you want to remove this post?</h4><small>You can\'t undo this action</small>';
+    var footer = '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-danger" data-dismiss="modal" onclick="API.Articles.DeletePost('+id+')">Remove</button>';
 
-    $('body').append('<div class="modal fade" id="aRemModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title">Do you want to remove this post?</h4><small>You can\'t undo this action</small></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-danger" data-dismiss="modal" onclick="API.Articles.DeletePost('+id+')">Remove</button></div></div></div></div>');
+    $('body').append(API.GenerateModalHTML("aRemModal",head,body,footer));
     $("#aRemModal").modal();
   }
 

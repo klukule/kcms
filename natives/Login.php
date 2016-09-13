@@ -5,7 +5,6 @@ require_once 'Utils/Errors.php';
 
 require_once 'Utils/MysqliConnection.php';
 $Connection = new MysqliConnection();
-
 if(!isset($_POST['username'])){
   PrintError(-10);
 }
@@ -40,6 +39,6 @@ if($result->num_rows == 1){
     PrintError(-13);
   }
 }else{
-  var_dump($result);
+  PrintError(-12);
 }
 ?>

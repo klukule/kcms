@@ -44,8 +44,8 @@ if($LoginValid){
 
   date_default_timezone_set("UTC");
   $date = new DateTime();
-  $timeWLT = $date->getTimestamp() - 3600000;
-  if($tokenCreateTime >= $timeWLT){
+  $timeWLT = $date->getTimestamp() - 3600;
+  if(intval($tokenCreateTime) >= $timeWLT){
     if(md5($usernameCookie) == $tokenUsername){
       $json = [
         "status" => "success",

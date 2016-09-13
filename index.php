@@ -43,7 +43,7 @@ if(!$LoginValid){
           </div>
           <a class="navbar-brand" href="index.php">
             KCMS
-            <span>v.1.0</span>
+            <span></span>
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -56,8 +56,8 @@ if(!$LoginValid){
           <ul class="nav navbar-nav navbar-right">
             <li class=" profil-link">
               <a href="#" id="logoutButton">
-                <span class="profile-address" id="userDisplayName"></span>
-                <img src="" class="img-circle" alt="" id="userAvatar">
+                <span class="profile-address" id="userDisplayName">Logout</span>
+                <img src="" class="img-circle" alt="" id="userAvatar" style="width:40px;height:40px;">
               </a>
             </li>
           </ul>
@@ -84,7 +84,7 @@ if(!$LoginValid){
   <script src="vendor/pacejs/pace.min.js"></script>
   <script src="vendor/jquery/dist/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script src="http://mindmup.github.io/bootstrap-wysiwyg/external/jquery.hotkeys.js" charset="utf-8"></script>
+  <script src="vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js" charset="utf-8"></script>
   <script src="vendor/bootstrap-wysiwyg/js/bootstrap-wysiwyg.js"></script>
   <script src="vendor/toastr/toastr.min.js"></script>
   <script src="vendor/sparkline/index.js"></script>
